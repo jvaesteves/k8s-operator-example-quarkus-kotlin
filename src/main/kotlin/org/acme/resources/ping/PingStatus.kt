@@ -1,4 +1,4 @@
-package org.acme
+package org.acme.resources.ping
 
 class PingStatus {
     lateinit var state: String
