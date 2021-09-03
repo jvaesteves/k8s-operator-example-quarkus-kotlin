@@ -1,7 +1,9 @@
 package org.acme.resources.ping
 
 class PingStatus {
-    lateinit var state: String
-    var error: Boolean = false
-    lateinit var message: String
+    enum class Status {
+        CREATED, PROCESSING, COMPLETED
+    }
+    var requestStatus: Status = Status.CREATED
+    var statusCode: Int? = null
 }
