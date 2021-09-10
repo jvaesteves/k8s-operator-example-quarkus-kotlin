@@ -12,7 +12,7 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse.BodyHandlers
 import javax.inject.Inject
 
-@Controller(namespaces = [Controller.WATCH_CURRENT_NAMESPACE])
+@Controller(namespaces=[Controller.WATCH_CURRENT_NAMESPACE], generationAwareEventProcessing=false)
 class PingController : ResourceController<Ping> {
     @Inject
     lateinit var k8sClient: KubernetesClient
