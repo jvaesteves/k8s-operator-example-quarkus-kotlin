@@ -8,7 +8,10 @@ import io.fabric8.kubernetes.model.annotation.Version
 
 @Group("org.acme")
 @Version("v1")
-class Ping : CustomResource<PingSpec, PingStatus>(), Namespaced
+class Ping : CustomResource<PingSpec, PingStatus>(), Namespaced {
+    override fun initSpec() = PingSpec()
+    override fun initStatus() = PingStatus()
+}
 
 class PingSpec {
     lateinit var url: String
