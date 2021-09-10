@@ -27,7 +27,7 @@ class PingController : ResourceController<Ping> {
 
     private fun updateResourceStatus(resource: Ping, status: PingStatus.Status): UpdateControl<Ping> {
         resource.status.requestStatus = status
-        return UpdateControl.updateCustomResourceAndStatus(resource)
+        return UpdateControl.updateStatusSubResource(resource)
     }
 
     private fun buildPongResource(resource: Ping): UpdateControl<Ping> {
