@@ -1,6 +1,6 @@
 apiVersion: org.acme/v1
-kind: PingRequest
+kind: Ping
 metadata:
-  name: foo
+  name: google
 spec:
-  payload: "bar"
+  url: "https://www.google.com/"
