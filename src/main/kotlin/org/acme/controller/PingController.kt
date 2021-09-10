@@ -33,8 +33,11 @@ class PingController : ResourceController<Ping> {
     private fun buildPongResource(resource: Ping): UpdateControl<Ping> {
         val request = buildHttpRequest(resource.spec.url)
         val response = httpClient.send(request, BodyHandlers.ofString())
+        resource.status.statusCode = response.statusCode()
 
         val pong = Pong().apply {
+            metadata.name = resource.metadata.name
+            metadata.namespace = resource.metadata.namespace
             spec = PongSpec().apply {
                 url = response.uri().toString()
                 statusCode = response.statusCode()
