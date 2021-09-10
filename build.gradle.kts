@@ -19,7 +19,7 @@ dependencies {
     implementation("io.quarkus:quarkus-kubernetes-client")
     implementation("io.quarkus:quarkus-arc")
     implementation("io.quarkus:quarkus-resteasy")
-    implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk:2.0.0.Beta4")
+    implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk:2.0.0.Beta5")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
 }

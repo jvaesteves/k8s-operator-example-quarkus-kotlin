@@ -1,9 +1,11 @@
-package org.acme.resources.ping
+package org.acme.controller
 
 import io.fabric8.kubernetes.client.KubernetesClient
 import io.javaoperatorsdk.operator.api.*
-import org.acme.resources.pong.Pong
-import org.acme.resources.pong.PongSpec
+import org.acme.crd.Ping
+import org.acme.crd.PingStatus
+import org.acme.crd.Pong
+import org.acme.crd.PongSpec
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -25,7 +27,7 @@ class PingController : ResourceController<Ping> {
 
     private fun updateResourceStatus(resource: Ping, status: PingStatus.Status): UpdateControl<Ping> {
         resource.status.requestStatus = status
-        return UpdateControl.updateStatusSubResource(resource)
+        return UpdateControl.updateCustomResourceAndStatus(resource)
     }
 
     private fun buildPongResource(resource: Ping): UpdateControl<Ping> {
@@ -48,8 +50,13 @@ class PingController : ResourceController<Ping> {
     }
 
     override fun createOrUpdateResource(resource: Ping, context: Context<Ping>): UpdateControl<Ping> {
-        println("[${resource.status?.requestStatus}] Received PING request for URL: ${resource.spec.url}")
-        return when (resource.status?.requestStatus) {
+        if (resource.status == null) {
+            println("Started request for URL: ${resource.spec.url}")
+            resource.status = PingStatus()
+            return UpdateControl.updateCustomResourceAndStatus(resource)
+        }
+        println("[${resource.status.requestStatus}] Received PING request for URL: ${resource.spec.url}")
+        return when (resource.status.requestStatus) {
             PingStatus.Status.CREATED -> updateResourceStatus(resource, PingStatus.Status.PROCESSING)
             PingStatus.Status.PROCESSING -> buildPongResource(resource)
             else -> UpdateControl.noUpdate()
