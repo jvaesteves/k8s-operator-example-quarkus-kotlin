@@ -3,6 +3,7 @@ package org.acme.crd
 import io.fabric8.kubernetes.api.model.Namespaced
 import io.fabric8.kubernetes.client.CustomResource
 import io.fabric8.kubernetes.model.annotation.Group
+import io.fabric8.kubernetes.model.annotation.PrinterColumn
 import io.fabric8.kubernetes.model.annotation.Version
 
 @Group("org.acme")
@@ -17,6 +18,9 @@ class PingStatus {
     enum class Status {
         CREATED, PROCESSING, COMPLETED
     }
+    @PrinterColumn
     var requestStatus: Status = Status.CREATED
+
+    @PrinterColumn
     var statusCode: Int? = null
 }
