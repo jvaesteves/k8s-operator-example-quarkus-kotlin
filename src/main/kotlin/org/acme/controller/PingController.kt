@@ -53,11 +53,6 @@ class PingController : ResourceController<Ping> {
     }
 
     override fun createOrUpdateResource(resource: Ping, context: Context<Ping>): UpdateControl<Ping> {
-        if (resource.status == null) {
-            println("Started request for URL: ${resource.spec.url}")
-            resource.status = PingStatus()
-            return UpdateControl.updateCustomResourceAndStatus(resource)
-        }
         println("[${resource.status.requestStatus}] Received PING request for URL: ${resource.spec.url}")
         return when (resource.status.requestStatus) {
             PingStatus.Status.CREATED -> updateResourceStatus(resource, PingStatus.Status.PROCESSING)
@@ -65,5 +60,4 @@ class PingController : ResourceController<Ping> {
             else -> UpdateControl.noUpdate()
         }
     }
-
 }
