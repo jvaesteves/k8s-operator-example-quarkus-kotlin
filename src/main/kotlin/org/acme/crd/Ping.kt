@@ -8,9 +8,9 @@ import io.fabric8.kubernetes.model.annotation.Version
 
 @Group("org.acme")
 @Version("v1")
-class Ping : CustomResource<PingSpec, PingStatus>(), Namespaced {
+class Ping : CustomResource<PingSpec, Status>(), Namespaced {
     override fun initSpec() = PingSpec()
-    override fun initStatus() = PingStatus()
+    override fun initStatus() = Status()
 }
 
 class PingSpec {
@@ -18,11 +18,8 @@ class PingSpec {
 }
 
 class PingStatus {
-    enum class Status {
-        CREATED, PROCESSING, COMPLETED
-    }
     @PrinterColumn
-    var requestStatus: Status = Status.CREATED
+    var requestStatus: Status = Status(Status.State.UNKNOWN)
 
     @PrinterColumn
     var statusCode: Int? = null
